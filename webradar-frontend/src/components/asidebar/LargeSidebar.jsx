@@ -1,90 +1,37 @@
-// import { Layout, Menu } from 'antd';
-// import CloudIco from '../icons/CloudIco';
-// import CloudSun from '../icons/CloudSun';
-
-// const { Sider } = Layout;
-
-// function LargeSidebar() {
-//   return (
-//     <Sider
-//       width={200}
-//       className="site-layout-background hidden lg:block"
-//       breakpoint="lg"
-//       collapsedWidth="0"
-//       style={{
-//         height: '100vh', // Ocupar todo el alto de la pantalla
-//         borderRight: '2px solid #5D5D5D', // Borde derecho de 2px con color #5D5D5D
-//       }}
-//     >
-//       {/* Logo Section */}
-//       <div style={{
-//         backgroundColor: '#fff', // Fondo blanco para el logo
-//         padding: '20px',
-//         display: 'flex',
-//         justifyContent: 'center',
-//       }}>
-//         <img
-//           src="/app/logo-ico.png" // Ruta al logo en la carpeta public
-//           alt="Logo"
-//           style={{
-//             width: '80px',
-//             objectFit: 'cover',
-//           }}
-//         />
-//       </div>
-
-//       <Menu
-//         mode="inline"
-//         defaultSelectedKeys={['1']}
-//         style={{ height: 'calc(100% - 120px)', borderRight: 0 }} // Altura ajustada para el menú
-//       >
-//         <Menu.Item key="1" icon={<CloudSun />}>
-//           Resumen diario
-//         </Menu.Item>
-//         <Menu.Item key="2" icon={<CloudIco />}>
-//           Historico
-//         </Menu.Item>
-//       </Menu>
-//     </Sider>
-//   );
-// }
-
-// export default LargeSidebar;
-
 import { Layout, Menu } from 'antd';
 import CloudIco from '../icons/CloudIco';
 import CloudSun from '../icons/CloudSun';
 import { LogoutOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
-function LargeSidebar() {
-  const navigate = useNavigate(); // Usa el hook useNavigate para redirigir
+function LargeSidebar({ selectedMenu, setSelectedMenu }) {
+  const navigate = useNavigate();
 
   return (
     <Sider
       width={200}
-      className="site-layout-background hidden lg:block"
+      className="site-layout-background hidden lg:block flex-col"
       breakpoint="lg"
       collapsedWidth="0"
       style={{
-        height: '100vh', 
+        height: '100vh',
         borderRight: '2px solid #5D5D5D',
       }}
     >
       {/* Logo Section */}
       <div style={{
-        backgroundColor: '#fff', 
+        backgroundColor: '#fff',
         padding: '20px',
         display: 'flex',
         justifyContent: 'center',
       }}>
         <img
-          src="/app/logo-ico.png"
+          src="/app/logo-alfanova.png"
           alt="Logo"
           style={{
-            width: '80px',
+            width: '100px',
             objectFit: 'cover',
           }}
         />
@@ -92,24 +39,31 @@ function LargeSidebar() {
 
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
-        style={{ height: 'calc(100% - 120px)', borderRight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+        selectedKeys={[selectedMenu]} // Establecer la clave seleccionada aquí
+        style={{ height: 'calc(100% - 120px)', borderRight: 0 }}
       >
-        <div>
-          <Menu.Item key="1" icon={<CloudSun />}>
-            Resumen diario
-          </Menu.Item>
-          <Menu.Item key="2" icon={<CloudIco />}>
-            Historico
-          </Menu.Item>
-        </div>
+        <Menu.Item 
+          key="resumen" 
+          icon={<CloudSun />} 
+          onClick={() => { setSelectedMenu('resumen'); }}
+          style={selectedMenu === 'resumen' ? { backgroundColor: '#e6f7ff', color: '#1890ff' } : {}}
+        >
+          Resumen diario
+        </Menu.Item>
+        <Menu.Item 
+          key="historico" 
+          icon={<CloudIco />} 
+          onClick={() => { setSelectedMenu('historico'); }}
+          style={selectedMenu === 'historico' ? { backgroundColor: '#e6f7ff', color: '#1890ff' } : {}}
+        >
+          Histórico
+        </Menu.Item>
 
-        {/* Botón de Salir */}
         <Menu.Item 
           key="logout" 
           icon={<LogoutOutlined />} 
-          style={{ color: 'red', marginTop: 'auto' }} 
-          onClick={() => navigate("/app")} // Redirige a la ruta de LandingPage
+          style={{ color: 'red', marginBottom: '0' }} 
+          onClick={() => navigate("/app/")}
         >
           Salir
         </Menu.Item>
