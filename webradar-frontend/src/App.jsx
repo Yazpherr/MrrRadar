@@ -6,6 +6,7 @@ import AboutUs from "./components/views/AboutUs";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import RadarDataView from './components/views/RadarDataView';
+import FilterGraph from './components/views/FilterGraph'; // Importa el nuevo componente
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Route path="/app/data" element={<DataFromAPI />} />
         <Route path="/app/quienes-somos" element={<AboutUs />} />
         <Route path="/app/radar-data" element={<RadarDataView />} /> {/* Nueva ruta */}
-
+        <Route path="/app/filter-graph" element={<FilterGraph />} /> {/* Nueva ruta */}
       </Routes>
     </Router>
   );

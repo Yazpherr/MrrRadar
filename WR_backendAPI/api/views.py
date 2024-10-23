@@ -87,3 +87,36 @@ def filter_json_files(request):
         print("No se encontraron archivos para los parámetros dados.")
     
     return JsonResponse(filtered_files, safe=False)
+
+# from django.http import JsonResponse
+# import os
+# import json
+
+# def obtener_json(request, fecha, variable, resolucion):
+#     # Construir la ruta al archivo JSON basado en los parámetros
+#     archivo_json = f'media/json_file/202408/{fecha}_{variable}_{resolucion}.json'
+    
+#     # Verificar si el archivo existe
+#     if os.path.exists(archivo_json):
+#         with open(archivo_json, 'r') as json_file:
+#             data = json.load(json_file)
+#         return JsonResponse(data)
+#     else:
+#         return JsonResponse({"error": "Archivo no encontrado"}, status=404)
+from django.http import JsonResponse
+import os
+import json
+from django.conf import settings
+
+def obtener_json(request, fecha, variable, resolucion):
+    # Construir la ruta completa usando settings.MEDIA_ROOT
+    archivo_json = os.path.join(settings.MEDIA_ROOT, f'json_file/202408/{fecha}_{variable}_{resolucion}.json')
+    
+    # Verificar si el archivo existe
+    if os.path.exists(archivo_json):
+        with open(archivo_json, 'r') as json_file:
+            data = json.load(json_file)
+        return JsonResponse(data)
+    else:
+        return JsonResponse({"error": "Archivo no encontrado"}, status=404)
+ 
